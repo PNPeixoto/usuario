@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Component
 public class UsuarioConverter {
 
@@ -90,5 +91,17 @@ public class UsuarioConverter {
                 .ddd(telefoneDTO.getDdd())
                 .build();
     }
+
+    public Usuario updateUsuario(UsuarioDTO usuarioDTO, Usuario entity) {
+        return Usuario.builder()
+                .nome(usuarioDTO.getNome() != null ? usuarioDTO.getNome() : entity.getNome())
+                .email(entity.getEmail()) // <-- O e-mail voltou para não ser apagado!
+                .id(entity.getId())
+                .senha(usuarioDTO.getSenha() != null ? usuarioDTO.getSenha() : entity.getSenha())
+                .enderecos(entity.getEnderecos()) // (Lembrando que aqui ele ignora as alterações do DTO)
+                .telefones(entity.getTelefones()) // (Aqui também ignora alterações do DTO)
+                .build();
+    }
+
 }
 
